@@ -44,9 +44,7 @@ export default function SimpleTable(props) {
               <TableCell align="center">{row.createdAt}</TableCell>
               <TableCell align="center">
                 {row.jobs.length === 0 ? (
-                  <span style={{ fontSize: "18px" }}>
-                    there is no active jobs
-                  </span>
+                  <span style={{ fontSize: "18px" }} />
                 ) : (
                   <FullScreenDialog
                     close={close}

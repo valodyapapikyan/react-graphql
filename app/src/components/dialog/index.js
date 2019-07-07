@@ -23,17 +23,17 @@ export default function MaxWidthDialog(props) {
   return (
     <React.Fragment>
       <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-        Actual jobs{" "}
         <span
           style={{
             color: "red",
-            fontWeight: "900",
+            fontSize: "19px",
             display: "inline-block",
-            marginLeft: "10px"
+            marginRight: "10px"
           }}
         >
           {props.count}
         </span>
+        <span> active jobs</span>
       </Button>
       <Dialog
         fullWidth={"600px"}
@@ -42,7 +42,7 @@ export default function MaxWidthDialog(props) {
         onClose={handleClose}
         aria-labelledby="max-width-dialog-title"
       >
-        <DialogTitle id="max-width-dialog-title">Jobs</DialogTitle>
+        <DialogTitle id="max-width-dialog-title" />
         <DialogContent>
           <DialogContentText>
             <List subheader={<li />}>
