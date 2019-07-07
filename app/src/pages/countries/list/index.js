@@ -1,0 +1,68 @@
+import React, { useState } from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import Table from "@material-ui/core/Table";
+import TableBody from "@material-ui/core/TableBody";
+import TableCell from "@material-ui/core/TableCell";
+import TableHead from "@material-ui/core/TableHead";
+import TableRow from "@material-ui/core/TableRow";
+import Paper from "@material-ui/core/Paper";
+import Button from "@material-ui/core/Button";
+
+import FullScreenDialog from "../../../components//dialog/";
+
+export default function SimpleTable(props) {
+  const [job, setJob] = useState({});
+
+  const close = isClose => isClose && setJob({});
+
+  return (
+    <Paper style={{ width: "95%" }}>
+      <Table>
+        <TableHead>
+          <TableRow>
+            <TableCell>Company Logo</TableCell>
+            <TableCell align="center">Name</TableCell>
+            <TableCell align="center">Website</TableCell>
+            <TableCell align="center">Created At</TableCell>
+            <TableCell align="center">See actual Jobs</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {props.companies.map(row => (
+            <TableRow key={row.name}>
+              <TableCell>
+                <img
+                  alt="no image for showing"
+                  style={{ width: "100px", heigth: "100px" }}
+                  src={row.logoUrl}
+                />
+              </TableCell>
+              <TableCell align="center">{row.name}</TableCell>
+              <TableCell align="center">
+                <a href={row.websiteUrl}> {row.websiteUrl}</a>
+              </TableCell>
+              <TableCell align="center">{row.createdAt}</TableCell>
+              <TableCell align="center">
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={() => {
+                    setJob(row.jobs);
+                  }}
+                >
+                  See Actual Jobs
+                </Button>
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+
+      {job ? (
+        <FullScreenDialog close={close} open={!!job.length} job={job} />
+      ) : job.length === 0 ? (
+        "no job posted"
+      ) : null}
+    </Paper>
+  );
+}
