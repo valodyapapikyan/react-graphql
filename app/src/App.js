@@ -41,6 +41,9 @@ class Provider extends Component {
 }
 
 class App extends Component {
+  state = { data: [] };
+  onFetched = data => this.setState(() => ({ data: data.companies }));
+
   render() {
     return (
       <ApolloProvider client={client}>
@@ -48,14 +51,17 @@ class App extends Component {
           <Context.Consumer>
             {context => (
               <React.Fragment>
-                <Query query={GET_COUNTRIES}>
-                  {({ loading, error, data }) => {
-                    console.log(data);
-                    if (loading) return <p>Loading...</p>;
-                    if (error) return <p>{error.message}</p>;
-                    return <Countries companies={data.companies} />;
+                <button
+                  onClick={async () => {
+                    const { data } = await client.query({
+                      query: GET_COUNTRIES
+                    });
+                    this.onFetched(data);
                   }}
-                </Query>
+                >
+                  Get companies list
+                </button>
+                <Countries companies={this.state.data} />
               </React.Fragment>
             )}
           </Context.Consumer>
