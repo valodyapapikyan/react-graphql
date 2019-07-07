@@ -1,15 +1,15 @@
 import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
 
-import Slide from "@material-ui/core/Slide";
+import List from "@material-ui/core/List";
+import ListItemText from "@material-ui/core/ListItemText";
 
-const Transition = React.forwardRef(function Transition(props, ref) {
-  return <Slide direction="up" ref={ref} {...props} />;
-});
-
-export default function FullScreenDialog(props) {
+export default function MaxWidthDialog(props) {
   const [open, setOpen] = React.useState(false);
 
   function handleClickOpen() {
@@ -18,27 +18,46 @@ export default function FullScreenDialog(props) {
 
   function handleClose() {
     setOpen(false);
-    props.close(true);
   }
 
   return (
-    <div>
+    <React.Fragment>
       <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-        See actual Jobs
+        Actual jobs{" "}
+        <span
+          style={{
+            color: "red",
+            fontWeight: "900",
+            display: "inline-block",
+            marginLeft: "10px"
+          }}
+        >
+          {props.count}
+        </span>
       </Button>
       <Dialog
-        fullScreen
-        open={props.open}
+        fullWidth={"600px"}
+        maxWidth={"500px"}
+        open={open}
         onClose={handleClose}
-        TransitionComponent={Transition}
+        aria-labelledby="max-width-dialog-title"
       >
-        {console.log("dsdsds", props)}
-        {props.job && Array.isArray(props.job)
-          ? props.job.map(j => {
-              return <h3> {j.title} </h3>;
-            })
-          : null}
+        <DialogTitle id="max-width-dialog-title">Optional sizes</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            <List subheader={<li />}>
+              {props.jobs && props.jobs.length
+                ? props.jobs.map(job => <ListItemText primary={job.title} />)
+                : null}
+            </List>
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose} color="primary">
+            Close
+          </Button>
+        </DialogActions>
       </Dialog>
-    </div>
+    </React.Fragment>
   );
 }

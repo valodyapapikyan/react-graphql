@@ -43,26 +43,22 @@ export default function SimpleTable(props) {
               </TableCell>
               <TableCell align="center">{row.createdAt}</TableCell>
               <TableCell align="center">
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={() => {
-                    setJob(row.jobs);
-                  }}
-                >
-                  See Actual Jobs
-                </Button>
+                {row.jobs.length === 0 ? (
+                  <span style={{ fontSize: "18px" }}>
+                    there is no active jobs
+                  </span>
+                ) : (
+                  <FullScreenDialog
+                    close={close}
+                    count={row.jobs.length}
+                    jobs={row.jobs}
+                  />
+                )}
               </TableCell>
             </TableRow>
           ))}
         </TableBody>
       </Table>
-
-      {job ? (
-        <FullScreenDialog close={close} open={!!job.length} job={job} />
-      ) : job.length === 0 ? (
-        "no job posted"
-      ) : null}
     </Paper>
   );
 }

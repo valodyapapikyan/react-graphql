@@ -1,18 +1,34 @@
 import React, { Component } from "react";
 import { ApolloProvider } from "react-apollo";
 import { client } from "./graphql";
+import { Query } from "react-apollo";
+import { gql } from "apollo-boost";
 
-import Countries from "./pages/countries/";
-// first we will make a new context
+import Countries from "./pages/jobs/";
+
 const Context = React.createContext();
 
-// Then create a provider Component
+const GET_COUNTRIES = gql`
+  {
+    companies {
+      name
+      logoUrl
+      id
+      createdAt
+      websiteUrl
+      jobs {
+        title
+        applyUrl
+        isFeatured
+      }
+    }
+  }
+`;
+
 class Provider extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      value: "hello  world"
-    };
+    this.state = {};
   }
 
   render() {
@@ -32,7 +48,14 @@ class App extends Component {
           <Context.Consumer>
             {context => (
               <React.Fragment>
-                <Countries value={context} />
+                <Query query={GET_COUNTRIES}>
+                  {({ loading, error, data }) => {
+                    console.log(data);
+                    if (loading) return <p>Loading...</p>;
+                    if (error) return <p>{error.message}</p>;
+                    return <Countries companies={data.companies} />;
+                  }}
+                </Query>
               </React.Fragment>
             )}
           </Context.Consumer>
