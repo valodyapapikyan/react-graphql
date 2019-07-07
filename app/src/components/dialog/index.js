@@ -42,7 +42,7 @@ export default function MaxWidthDialog(props) {
         onClose={handleClose}
         aria-labelledby="max-width-dialog-title"
       >
-        <DialogTitle id="max-width-dialog-title">Optional sizes</DialogTitle>
+        <DialogTitle id="max-width-dialog-title">Jobs</DialogTitle>
         <DialogContent>
           <DialogContentText>
             <List subheader={<li />}>
