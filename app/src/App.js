@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, useState } from "react";
 import { ApolloProvider } from "react-apollo";
 import { client } from "./graphql";
 import { Query } from "react-apollo";
@@ -40,36 +40,31 @@ class Provider extends Component {
   }
 }
 
-class App extends Component {
-  state = { data: [] };
-  onFetched = data => this.setState(() => ({ data: data.companies }));
+const App = () => {
+  const [data, setState] = useState([]);
 
-  fetch = async client => {
+  const fetch = async client => {
     const { data } = await client.query({
       query: GET_COUNTRIES
     });
 
-    this.setState({ data: data.companies });
+    setState(data.companies);
   };
 
-  render() {
-    return (
-      <ApolloProvider client={client}>
-        <Provider>
-          <Context.Consumer>
-            {context => (
-              <React.Fragment>
-                <button onClick={() => this.fetch(client)}>
-                  Get companies list
-                </button>
-                <Countries companies={this.state.data} />
-              </React.Fragment>
-            )}
-          </Context.Consumer>
-        </Provider>
-      </ApolloProvider>
-    );
-  }
-}
+  return (
+    <ApolloProvider client={client}>
+      <Provider>
+        <Context.Consumer>
+          {context => (
+            <React.Fragment>
+              <button onClick={() => fetch(client)}>Get companies list</button>
+              <Countries companies={data} />
+            </React.Fragment>
+          )}
+        </Context.Consumer>
+      </Provider>
+    </ApolloProvider>
+  );
+};
 
 export default App;
