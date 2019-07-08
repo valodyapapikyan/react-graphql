@@ -8,17 +8,17 @@ const defaultState = {
   isLoading: false
 };
 
-const Context = React.createContext(defaultState);
+const RootContext = React.createContext(defaultState);
 
 const withStore = Component => props => (
-  <Context.Consumer>
+  <RootContext.Consumer>
     {value => (
       <Component {...props} store={value.state} storeActions={value.actions} />
     )}
-  </Context.Consumer>
+  </RootContext.Consumer>
 );
 
-class AppStateProvider extends PureComponent {
+class RootProvider extends PureComponent {
   constructor(props) {
     super(props);
 
@@ -32,6 +32,8 @@ class AppStateProvider extends PureComponent {
     const { data } = await client.query({
       query: GET_COMPANIES
     });
+
+    this.setState({ companies: data.companies });
   };
 
   render() {
@@ -39,7 +41,7 @@ class AppStateProvider extends PureComponent {
 
     return (
       <Fragment>
-        <Context.Provider
+        <RootContext.Provider
           value={{
             state,
             actions: {
@@ -48,7 +50,7 @@ class AppStateProvider extends PureComponent {
           }}
         >
           {this.props.children}
-        </Context.Provider>
+        </RootContext.Provider>
       </Fragment>
     );
   }
@@ -56,4 +58,4 @@ class AppStateProvider extends PureComponent {
 
 export { withStore };
 
-export default AppStateProvider;
+export default RootProvider;

@@ -9,6 +9,8 @@ import {
 } from "@material-ui/core/styles";
 import App from "./App";
 // import theme from "./theme";
+import RootProvider from "./store";
+
 import * as serviceWorker from "./serviceWorker";
 
 const Index = () => {
@@ -21,7 +23,9 @@ const Index = () => {
   return (
     <JssProvider jss={jss} generateClassName={generateClassName}>
       <MuiThemeProvider>
-        <App />
+        <RootProvider>
+          <App />
+        </RootProvider>
       </MuiThemeProvider>
     </JssProvider>
   );
