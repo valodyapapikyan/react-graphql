@@ -8,14 +8,13 @@ import { gql } from "apollo-boost";
 import RootProvider from "./store";
 import { withStore } from "./store";
 
-import Countries from "./pages/jobs/";
+import Content from "./pages/main/";
 
 const App = props => {
   return (
     <ApolloProvider client={client}>
       <>
-        <button onClick={props.storeActions.getCompanies}>get companies</button>
-        <Countries companies={props.store.companies} />
+        <Content />
       </>
     </ApolloProvider>
   );

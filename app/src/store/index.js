@@ -1,6 +1,7 @@
 import React, { PureComponent, Fragment } from "react";
 import { client } from "../graphql";
 
+import Fetch from "utils";
 import { GET_COMPANIES } from "./../constants/Queries";
 
 const defaultState = {
@@ -27,6 +28,8 @@ class RootProvider extends PureComponent {
       companies: []
     };
   }
+
+  // TODO :: Create Fetch   and reduce method
 
   getCompanies = async _ => {
     const { data } = await client.query({

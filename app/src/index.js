@@ -1,5 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import { BrowserRouter } from "react-router-dom";
+
 import JssProvider from "react-jss/lib/JssProvider";
 import { create } from "jss";
 import {
@@ -24,7 +26,9 @@ const Index = () => {
     <JssProvider jss={jss} generateClassName={generateClassName}>
       <MuiThemeProvider>
         <RootProvider>
-          <App />
+          <BrowserRouter>
+            <App />
+          </BrowserRouter>
         </RootProvider>
       </MuiThemeProvider>
     </JssProvider>
